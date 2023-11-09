@@ -21,6 +21,8 @@ public class Student {
         this.email = email;
     }
 
+
+
     // Getters and setters
     public Long getSid() {
         return sid;

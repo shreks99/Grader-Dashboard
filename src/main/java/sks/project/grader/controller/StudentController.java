@@ -17,8 +17,9 @@ public class StudentController {
     private StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-        return ResponseEntity.ok(studentService.createStudent(student));
+    public ResponseEntity<Void> createStudent(@RequestBody Student student) {
+        studentService.createStudent(student);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")

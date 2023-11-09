@@ -10,7 +10,6 @@ import java.util.Objects;
 public class StudentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sid;
 
     private String netId;
@@ -49,6 +48,16 @@ public class StudentEntity {
 
     public void setNetId(String netId) {
         this.netId = netId;
+    }
+
+    public StudentEntity() {
+    }
+
+    public StudentEntity(Long sid,String netId, String name, String email) {
+        this.sid = sid;
+        this.netId = netId;
+        this.name = name;
+        this.email = email;
     }
 
     @Override
