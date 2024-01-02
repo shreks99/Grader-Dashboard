@@ -8,7 +8,7 @@ import sks.project.grader.service.StudentService;
 
 import java.util.List;
 
-
+//@CrossOrigin(origins = "http://localhost:4200/") // Angular server
 @RestController
 @RequestMapping("/students")
 public class StudentController {

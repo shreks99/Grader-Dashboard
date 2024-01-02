@@ -43,8 +43,9 @@ public class StudentServiceImpl implements StudentService{
     @Override
     @Transactional
     public Student updateStudent(Long id, Student studentDetails) {
-        StudentEntity studentEntity = mapperUtil.modelToExistingEntity(studentDetails);
-        return studentDetails;
+        //StudentEntity studentEntity = mapperUtil.modelToExistingEntity(studentDetails);
+      //  return StudentEntity.fromStudent(studentDetails);
+        return new Student();
     }
 
 

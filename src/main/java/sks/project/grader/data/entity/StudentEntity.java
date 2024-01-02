@@ -1,8 +1,14 @@
 package sks.project.grader.data.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import sks.project.grader.data.model.Student;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
 @Entity
@@ -10,28 +16,49 @@ import java.util.Objects;
 public class StudentEntity {
 
     @Id
-    private Long sid;
+    private Long studentID;
+    @Column(nullable = false, unique = true)
+    private String netID;
 
-    private String netId;
-    private String name;
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false, unique = true)
     private String email;
     // other fields
 
+    @Column(nullable = false)
+    private LocalDate dob;
+    @Column(nullable = false)
+    private String gender;
+
+    @Column(nullable = false)
+    private String branch;
+
     // getters and setters
-    public Long getSid() {
-        return sid;
+
+    public Long getStudentID() {
+        return studentID;
     }
 
-    public void setSid(Long sid) {
-        this.sid = sid;
+    public void setStudentID(Long studentID) {
+        this.studentID = studentID;
     }
 
-    public String getName() {
-        return name;
+    public String getNetID() {
+        return netID;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNetID(String netID) {
+        this.netID = netID;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -42,44 +69,76 @@ public class StudentEntity {
         this.email = email;
     }
 
-    public String getNetId() {
-        return netId;
+    public LocalDate getDob() {
+        return dob;
     }
 
-    public void setNetId(String netId) {
-        this.netId = netId;
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
     }
 
-    public StudentEntity() {
+    public String getGender() {
+        return gender;
     }
 
-    public StudentEntity(Long sid,String netId, String name, String email) {
-        this.sid = sid;
-        this.netId = netId;
-        this.name = name;
-        this.email = email;
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof StudentEntity that)) return false;
-        return Objects.equals(getSid(), that.getSid()) && Objects.equals(getNetId(), that.getNetId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getEmail(), that.getEmail());
+        return Objects.equals(getStudentID(), that.getStudentID()) && Objects.equals(getNetID(), that.getNetID()) && Objects.equals(getFullName(), that.getFullName()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getDob(), that.getDob()) && Objects.equals(getGender(), that.getGender()) && Objects.equals(getBranch(), that.getBranch());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSid(), getNetId(), getName(), getEmail());
+        return Objects.hash(getStudentID(), getNetID(), getFullName(), getEmail(), getDob(), getGender(), getBranch());
     }
 
     @Override
     public String toString() {
         return "StudentEntity{" +
-                "sid=" + sid +
-                ", netId='" + netId + '\'' +
-                ", name='" + name + '\'' +
+                "studentID=" + studentID +
+                ", netID='" + netID + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
+                ", dob=" + dob +
+                ", gender='" + gender + '\'' +
+                ", branch='" + branch + '\'' +
                 '}';
     }
+
+
+    public static StudentEntity fromStudent(Student studentResponse) {
+        StudentEntity studentEntity = new StudentEntity();
+        studentEntity.setStudentID(studentResponse.getStudentID());
+        studentEntity.setNetID(studentResponse.getNetID());
+        studentEntity.setFullName(studentResponse.getFullName());
+        studentEntity.setEmail(studentResponse.getEmail());
+
+        // Assuming dob is stored as LocalDate in the Student entity
+        // Convert the String back to LocalDate. Handle any potential parsing errors.
+        try {
+            studentEntity.setDob(LocalDate.parse(studentResponse.getDob()));
+        } catch (DateTimeParseException e) {
+            // Handle the error appropriately
+        }
+
+        studentEntity.setGender(studentResponse.getGender());
+        studentEntity.setBranch(studentResponse.getBranch());
+        return studentEntity;
+    }
+
+
 }
 
