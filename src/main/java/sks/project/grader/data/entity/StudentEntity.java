@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 import sks.project.grader.data.model.Student;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
 
@@ -39,7 +40,7 @@ public class StudentEntity {
 
     public Long getStudentID() {
         return studentID;
-    }
+    } //TODO: UUID
 
     public void setStudentID(Long studentID) {
         this.studentID = studentID;
@@ -129,7 +130,7 @@ public class StudentEntity {
         // Assuming dob is stored as LocalDate in the Student entity
         // Convert the String back to LocalDate. Handle any potential parsing errors.
         try {
-            studentEntity.setDob(LocalDate.parse(studentResponse.getDob()));
+            studentEntity.setDob(LocalDate.parse(studentResponse.getDob(), DateTimeFormatter.ISO_LOCAL_DATE));
         } catch (DateTimeParseException e) {
             // Handle the error appropriately
         }
